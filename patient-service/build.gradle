@@ -3,6 +3,11 @@ plugins {
 	id 'org.springframework.boot' version '3.4.5'
 	id 'io.spring.dependency-management' version '1.1.7'
 	id("io.freefair.lombok") version "8.13.1"
+
+	// for OS-based native artifact classifiers (like your os-maven-plugin)
+	id 'com.google.osdetector' version '1.7.3'
+	// for protoc + grpc-java code generation
+	id 'com.google.protobuf' version '0.9.5'
 }
 
 group = 'com.aavukat'
@@ -23,11 +28,41 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8'
+
+	// --- GRPC support ---
+	implementation 'io.grpc:grpc-netty-shaded:1.69.0'
+	implementation 'io.grpc:grpc-protobuf:1.69.0'
+	implementation 'io.grpc:grpc-stub:1.69.0'
+	implementation 'com.google.protobuf:protobuf-java:4.29.1'
+
+	// necessary for Java 9+
+	compileOnly 'org.apache.tomcat:annotations-api:6.0.53'
+
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	developmentOnly 'com.h2database:h2'
+}
+
+protobuf {
+	// match your Maven protocArtifact
+	protoc {
+		artifact = "com.google.protobuf:protoc:3.25.5:${project.osdetector.classifier}"
+	}
+	plugins {
+		grpc {
+			// match your Maven pluginArtifact
+			artifact = "io.grpc:protoc-gen-grpc-java:1.68.1:${project.osdetector.classifier}"
+		}
+	}
+	generateProtoTasks {
+		all().configureEach { task ->
+			task.plugins {
+				grpc {}
+			}
+		}
+	}
 }
 
 tasks.named('test') {
