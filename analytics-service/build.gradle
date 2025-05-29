@@ -1,0 +1,67 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.0'
+	id 'io.spring.dependency-management' version '1.1.7'
+
+	// for OS-based native artifact classifiers (like your os-maven-plugin)
+	id 'com.google.osdetector' version '1.7.3'
+	// for protoc + grpc-java code generation
+	id 'com.google.protobuf' version '0.9.5'
+}
+
+group = 'com.aavukat'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.kafka:spring-kafka'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.kafka:spring-kafka-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// --- GRPC support ---
+	implementation 'io.grpc:grpc-netty-shaded:1.69.0'
+	implementation 'io.grpc:grpc-protobuf:1.69.0'
+	implementation 'io.grpc:grpc-stub:1.69.0'
+
+	// necessary for Java 9+
+	compileOnly 'org.apache.tomcat:annotations-api:6.0.53'
+
+	implementation 'net.devh:grpc-spring-boot-starter:3.1.0.RELEASE'
+	implementation 'com.google.protobuf:protobuf-java:4.29.1'
+
+}
+
+protobuf {
+	// match your Maven protocArtifact
+	protoc {
+		artifact = "com.google.protobuf:protoc:3.25.5:${project.osdetector.classifier}"
+	}
+	plugins {
+		grpc {
+			// match your Maven pluginArtifact
+			artifact = "io.grpc:protoc-gen-grpc-java:1.68.1:${project.osdetector.classifier}"
+		}
+	}
+	generateProtoTasks {
+		all().configureEach { task ->
+			task.plugins {
+				grpc {}
+			}
+		}
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
