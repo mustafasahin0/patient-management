@@ -2,6 +2,7 @@ package com.aavukat.authservice.service;
 
 import com.aavukat.authservice.dto.LoginRequestDTO;
 import com.aavukat.authservice.util.JwtUtil;
+import io.jsonwebtoken.JwtException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +29,14 @@ public class AuthService {
                 .map(u -> jwtUtil.generateToken(u.getEmail(), u.getRole()));
 
         return token;
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            jwtUtil.validateToken(token);
+            return true;
+        } catch (JwtException e) {
+            return false;
+        }
     }
 }
