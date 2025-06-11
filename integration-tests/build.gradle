@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.aavukat'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    // JUnit BOM to align all 5.10.0 modules
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    // JUnit Jupiter API + Engine
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testRuntimeOnly   'org.junit.jupiter:junit-jupiter-engine'
+
+    // Rest-Assured for API testing
+    testImplementation 'io.rest-assured:rest-assured:5.3.0'
+    testImplementation 'io.rest-assured:json-path:5.3.0'
+    testImplementation 'io.rest-assured:xml-path:5.3.0'
+}
+
+test {
+    useJUnitPlatform()
+}
