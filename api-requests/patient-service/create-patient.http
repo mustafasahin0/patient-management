@@ -1,6 +1,7 @@
 ### POST Create a new patient
-POST http://localhost:4004/patients
+POST http://lb-83954717.elb.localhost.localstack.cloud:4004/api/patients
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "name": "Kafka User",

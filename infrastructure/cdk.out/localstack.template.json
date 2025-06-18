@@ -658,9 +658,9 @@
      ],
      "InstanceType": "kafka.m5.xlarge"
     },
-    "ClusterName": "kafka-cluster",
+    "ClusterName": "kafa-cluster",
     "KafkaVersion": "2.8.0",
-    "NumberOfBrokerNodes": 1
+    "NumberOfBrokerNodes": 4
    }
   },
   "PatientManagementCluster98E10F8D": {
@@ -704,7 +704,7 @@
        },
        {
         "Name": "JWT_SECRET",
-        "Value": "+2WXv8NU2PLvExXPg/IY9SHeypNKmlmpJ50+ZlRS1JOI2tN3xUGu4IqSbBErbA1GXkZIuIx8oGQX11H46+hFg=="
+        "Value": "Y2hhVEc3aHJnb0hYTzMyZ2ZqVkpiZ1RkZG93YWxrUkM="
        },
        {
         "Name": "SPRING_DATASOURCE_URL",
@@ -1636,12 +1636,12 @@
      {
       "Environment": [
        {
-        "Name": "AUTH_SERVICE_URL",
-        "Value": "http://host.docker.internal:4005"
-       },
-       {
         "Name": "SPRING_PROFILES_ACTIVE",
         "Value": "prod"
+       },
+       {
+        "Name": "AUTH_SERVICE_URL",
+        "Value": "http://host.docker.internal:4005"
        }
       ],
       "Essential": true,

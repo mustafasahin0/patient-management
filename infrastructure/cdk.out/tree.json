@@ -1128,9 +1128,9 @@
                   "instanceType": "kafka.m5.xlarge",
                   "brokerAzDistribution": "DEFAULT"
                 },
-                "clusterName": "kafka-cluster",
+                "clusterName": "kafa-cluster",
                 "kafkaVersion": "2.8.0",
-                "numberOfBrokerNodes": 1
+                "numberOfBrokerNodes": 4
               }
             },
             "constructInfo": {
@@ -1275,7 +1275,7 @@
                           },
                           {
                             "name": "JWT_SECRET",
-                            "value": "+2WXv8NU2PLvExXPg/IY9SHeypNKmlmpJ50+ZlRS1JOI2tN3xUGu4IqSbBErbA1GXkZIuIx8oGQX11H46+hFg=="
+                            "value": "Y2hhVEc3aHJnb0hYTzMyZ2ZqVkpiZ1RkZG93YWxrUkM="
                           },
                           {
                             "name": "SPRING_DATASOURCE_URL",
@@ -2779,12 +2779,12 @@
                         },
                         "environment": [
                           {
-                            "name": "AUTH_SERVICE_URL",
-                            "value": "http://host.docker.internal:4005"
-                          },
-                          {
                             "name": "SPRING_PROFILES_ACTIVE",
                             "value": "prod"
+                          },
+                          {
+                            "name": "AUTH_SERVICE_URL",
+                            "value": "http://host.docker.internal:4005"
                           }
                         ]
                       }
